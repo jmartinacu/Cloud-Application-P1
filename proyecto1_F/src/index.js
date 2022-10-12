@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
-  RouterProvider,
-  Route,
+  RouterProvider
 } from "react-router-dom";
 import ErrorPage from './components/Error_Page'
 import SearchPage from './components/Image_Search'
-import './index.css';
+import './css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

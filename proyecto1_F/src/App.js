@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 import ImageForm from './components/Image_Form';
 
 function App() {
