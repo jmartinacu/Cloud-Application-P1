@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 axios.post('/image', {
     Description: 'Pueba',
     Directory: 'C:/'
