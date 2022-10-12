@@ -1,4 +1,5 @@
 import React, { useState }  from 'react'
+import { Link } from 'react-router-dom'
 
 export default function ImageForm() {
   const [Images, setImages] = useState([])
@@ -58,6 +59,12 @@ export default function ImageForm() {
     <div className="container-fluid">
       <br></br>
       <form onSubmit={handleSubmit}>
+        {/* NAVIGATE TO SEARCHIMAGE */}
+        <nav>
+          <li>
+            <Link to={'search'}> Search Images!! </Link>
+          </li>
+        </nav>
         {/* INPUT DESCRIPTION */}
         <label>
           <span> Description: </span>
