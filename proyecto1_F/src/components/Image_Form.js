@@ -22,11 +22,15 @@ export default function ImageForm() {
     setImages(newImgsState);
 
     console.log(newImgsState);
+    fetch('http://localhost:8001/api/save', {
+      method: 'POST',
+      body: Images[indexImg]})
   }
 
 
   function readmultifiles(e, indexInicial) {
     const files = e.currentTarget[1].files;
+    const description = e.currentTarget[0].value;
 
     //el array con las imagenes nuevas
     const arrayImages = [];
@@ -39,7 +43,7 @@ export default function ImageForm() {
       console.log(file);
       arrayImages.push({
         index: indexInicial,
-        name: file.name,
+        description: description,
         url,
         file
       });
@@ -58,13 +62,13 @@ export default function ImageForm() {
   return (
     <div className="container-fluid">
       <br></br>
+      {/* NAVIGATE TO SEARCHIMAGE */}
+      <nav>
+        <li>
+          <Link to={'search'}> Search Images!! </Link>
+        </li>
+      </nav>
       <form onSubmit={handleSubmit}>
-        {/* NAVIGATE TO SEARCHIMAGE */}
-        <nav>
-          <li>
-            <Link to={'search'}> Search Images!! </Link>
-          </li>
-        </nav>
         {/* INPUT DESCRIPTION */}
         <label>
           <span> Description: </span>
@@ -97,6 +101,7 @@ export default function ImageForm() {
                 className="img-responsive"
               ></img>
             </div>
+            <h2>{image.description}</h2>
           </div>
         ))}
       </div>
