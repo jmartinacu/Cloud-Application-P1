@@ -12,15 +12,40 @@ router.get('/posts/:d', async function (req, res) {
   }
 })
 
-router.post('/save', async function (req, res) {
+router.post('/saveDatabase', async function (req, res) {
   try {
-    const {description, image} = req.body
-    const sqlQuery = 'INSERT INTO images (description, image) VALUES (?, ?)'
-    const result = await pool.query(sqlQuery, [description, image])
-    res.status(200).json(result)
+    const {description, imageName} = req.body;
+    const sqlQuery = 'INSERT INTO images (description, image) VALUES (?, ?)';
+    const result = await pool.query(sqlQuery, [description, imageName]);
+    res.status(200).json({id: `${result.insertId}`})
   } catch (error) {
     res.status(400).send(error)
   }
+})
+
+router.post('/saveFile', function (req, res) {
+  const file = req.files.myFile
+  const fileName = req.files.myFile.fileName
+
+  const path = __dirname + '/../public/images' + fileName
+
+  file.mv(path, (error) => {
+    if (error) {
+      console.log(error)
+      res.writeHead(500, {
+        'Content-Type': 'application/json'
+      })
+      res.end(JSON.stringify({
+        status: 'error',
+        message: error
+      }))
+      return
+    }
+    return res.status(200).send({
+      status: 'Sucess',
+      path: `public/images/${fileName}`
+    })
+  })
 })
 
 module.exports = router
