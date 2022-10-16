@@ -19,22 +19,25 @@ export default function ImageSearch() {
     } else {
       indexImg = 0;
     }
-    const newImgArray = []
     const image = {
       description: databaseImage.description,
       date: new Date(databaseImage).toLocaleString(),
+      /* lo que peta es la linea de abajo hasta que api/saveFile funcione */
       url: '../../../proyecto1_B/public/images/' + databaseImage.imageName,
       index: indexImg
     } 
-    newImgArray.push(image)
-    return newImgArray
+    return image
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const description = e.currentTarget[0].value
-    const databaseImage = imageLoad(description)
-    const newImgArray = loadImages(databaseImage)
+    const databaseImages = imageLoad(description)
+    const newImgArray = []
+    for (let databaseImage of databaseImages) {
+      const auxImg = loadImages(databaseImage)
+      newImgArray.push(auxImg)
+    }
     setImages([...images, ...newImgArray])
   } 
 
