@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload')
 const dotenv = require('dotenv');
 const cors = require('cors')
 
@@ -8,6 +9,10 @@ const PORT = process.env.APP_PORT || '3000';
 
 const app = express();
 
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/temp/'
+}))
 app.use(cors())
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());

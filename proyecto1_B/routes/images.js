@@ -24,11 +24,10 @@ router.post('/saveDatabase', async function (req, res) {
 })
 
 router.post('/saveFile', function (req, res) {
-  console.log(req)
-  const file = req.files[0]
-  const fileName = file.name
+  const file = req.files.myFile
+  const fileName = req.files.myFile.name
 
-  const path = __dirname + '/../public/images' + fileName
+  const path = __dirname + '/../public/images/' + fileName
 
   file.mv(path, (error) => {
     if (error) {

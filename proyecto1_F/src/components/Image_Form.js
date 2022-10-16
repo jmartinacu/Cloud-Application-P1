@@ -40,7 +40,7 @@ export default function ImageForm() {
     let indexImg;
 
     let r = (Math.random() + 1).toString(36).substring(2)
-    let extension = imageInformation.name.split('.')[1]
+    let extension = imageInformation.name.split('.').pop()
     let imageName = r + '.' + extension
     const formData = new FormData()
     formData.append('prueba', 'clavePrueba') // Eliminar 

@@ -16,7 +16,7 @@ export default function ImageSearch() {
       description: databaseImage.description,
       date: new Date(databaseImage.created_at).toLocaleString(),
       /* lo que no funciona es la linea de abajo hasta que api/saveFile funcione, aunque la web sigue funcionando solo que no pinta la imagen*/
-      url: '../../../proyecto1_B/public/images/' + databaseImage.image,
+      url: 'C:\\Users\\jmart\\Dev\\Study\\ACD_P1\\proyecto1_B\\public\\images' + databaseImage.image,
       index: indexImg
     } 
     return image
