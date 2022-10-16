@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors')
 
 dotenv.config({path: '.env'})
 
@@ -7,11 +8,18 @@ const PORT = process.env.APP_PORT || '3000';
 
 const app = express();
 
-app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+    res.header("Access-Control-Allow-Headers", "Content-Type, Accept")
+    res.header('Access-Control-Allow-Methods', 'GET, POST')
+    next();
+})
 
 app.get('/', (req, res) => {
-  res.status(200).json({name: 'Joaquin'})
+  res.status(200).send('Backend for proyect 1 of Cloud Application Development')
 })
 
 const imagesRoutes = require('./routes/images')

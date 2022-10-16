@@ -24,8 +24,9 @@ router.post('/saveDatabase', async function (req, res) {
 })
 
 router.post('/saveFile', function (req, res) {
-  const file = req.files.myFile
-  const fileName = req.files.myFile.fileName
+  console.log(req)
+  const file = req.files[0]
+  const fileName = file.name
 
   const path = __dirname + '/../public/images' + fileName
 

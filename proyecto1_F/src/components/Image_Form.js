@@ -3,12 +3,59 @@ import { Link } from 'react-router-dom'
 
 export default function ImageForm() {
   const [Images, setImages] = useState([])
+  async function imageUpload(formData) {
+    await fetch('http://localhost:8001/api/saveFile', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json'
+      },
+        body: formData
+    })
+  }
 
+  async function databaseUpload(description, imageName) {
+    console.log(JSON.stringify({
+        "description": description,
+        "imageName": imageName
+      }))
+    const response = await fetch('http://localhost:8001/api/saveDatabase', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Origin': 'http://localhost:3000'
+      }, 
+      body: JSON.stringify({
+        "description": description,
+        "imageName": imageName
+      })
+    })
+
+    const data = await response.json()
+    console.log(data)
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
+    const imageInformation = e.currentTarget[1].files[0];
+    console.log(imageInformation)
+    const description = e.currentTarget[0].value;
     console.log(e.currentTarget[1].files)
     //esto es el indice que se le dará a cada imagen, a partir del indice de la ultima foto
     let indexImg;
+
+    let r = (Math.random() + 1).toString(36).substring(2)
+    let extension = imageInformation.name.split('.')[1]
+    let imageName = r + '.' + extension
+    const formData = new FormData()
+    formData.append('prueba', 'clavePrueba') // Eliminar 
+    formData.append('myFile', imageInformation , imageName)
+    console.log(formData)
+/*     console.log(formData.files.myFile.name) */
+    if (imageInformation === '' || description === '' ) alert('The fields images and description must be completed')
+    else {
+      imageUpload(formData)
+      databaseUpload(description, imageName)
+    } 
 
     //aquí evaluamos si ya hay imagenes antes de este input, para saber en dónde debe empezar el index del proximo array
     if (Images.length > 0) {
@@ -22,9 +69,14 @@ export default function ImageForm() {
     setImages(newImgsState);
 
     console.log(newImgsState);
-    fetch('http://localhost:8001/api/save', {
+/*     fetch('http://localhost:8001/api/saveDatabase', {
       method: 'POST',
-      body: Images[indexImg]})
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {
+        'description': description 
+      }}) */
   }
 
 
@@ -68,17 +120,17 @@ export default function ImageForm() {
           <Link to={'search'}> Search Images!! </Link>
         </li>
       </nav>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         {/* INPUT DESCRIPTION */}
         <label>
           <span> Description: </span>
-          <input type='text' />
+          <input type='text' required/>
         </label>
         <br></br>
         {/* INPUT IMAGES */}
         <label className="btn btn-warning">
           <span> Select Images: </span>
-          <input type="file" multiple></input>
+          <input type="file" accept='.jpg, .jpeg, .png' required></input>
         </label>
 
         {/* SEND IMAGES TO BACKEND */}
