@@ -14,10 +14,6 @@ export default function ImageForm() {
   }
 
   async function databaseUpload(description, imageName) {
-    console.log(JSON.stringify({
-        "description": description,
-        "imageName": imageName
-      }))
     const response = await fetch('http://localhost:8001/api/saveDatabase', {
       method: 'POST',
       headers: {
