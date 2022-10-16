@@ -5,40 +5,43 @@ export default function ImageSearch() {
 
   const [images, setImages] = useState([])
 
-  async function imageLoad(description) {
+  async function imageSearch(description) {
     const response = await fetch(`http://localhost:8001/api/posts/${description}`)
     const data = await response.json()
-    console.log(data)
     return data
   }
 
-  function loadImages(databaseImage) {
+  function transImages(databaseImage, indexImg) {
+    const image = {
+      description: databaseImage.description,
+      date: new Date(databaseImage.created_at).toLocaleString(),
+      /* lo que no funciona es la linea de abajo hasta que api/saveFile funcione, aunque la web sigue funcionando solo que no pinta la imagen*/
+      url: '../../../proyecto1_B/public/images/' + databaseImage.image,
+      index: indexImg
+    } 
+    return image
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    const description = e.currentTarget[0].value
+    const databaseImages = await imageSearch(description)
+    console.log(databaseImages)
+    const newImgArray = []
     let indexImg;
     if (images.length > 0) {
       indexImg = images[images.length - 1].index + 1;
     } else {
       indexImg = 0;
     }
-    const image = {
-      description: databaseImage.description,
-      date: new Date(databaseImage).toLocaleString(),
-      /* lo que peta es la linea de abajo hasta que api/saveFile funcione */
-      url: '../../../proyecto1_B/public/images/' + databaseImage.imageName,
-      index: indexImg
-    } 
-    return image
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const description = e.currentTarget[0].value
-    const databaseImages = imageLoad(description)
-    const newImgArray = []
-    for (let databaseImage of databaseImages) {
-      const auxImg = loadImages(databaseImage)
+    for (const databaseImage of databaseImages) {
+      const auxImg = transImages(databaseImage, indexImg)
       newImgArray.push(auxImg)
+      indexImg++
     }
+    console.log(newImgArray)
     setImages([...images, ...newImgArray])
+    console.log(images)
   } 
 
   return (
@@ -69,7 +72,8 @@ export default function ImageSearch() {
                   className="img-responsive"
                 ></img>
               </div>
-              <h2>{image.description}</h2>
+              <h2>{`Description: ${image.description}`}</h2>
+              <div>{`Date: ${image.date}`}</div>
             </div>
           ))}
         </div>
