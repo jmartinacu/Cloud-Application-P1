@@ -139,18 +139,24 @@ export default function ImageForm() {
       <br></br>
       <div className="row">
         {Images.map((image) => (
-          <div className="col-6 col-sm-4 col-lg-3 square" key={image.index}>
-            <div className="content_img">
-              <img
-                alt="algo"
-                src={image.url}
-                data-toggle="modal"
-                data-target="#ModalPreViewImg"
-                className="img-responsive"
-              ></img>
-            </div>
-            <h2>{image.description}</h2>
+          <div style={{width: '18rem'}} class="card" key={image.index}>
+          <div class="card-img-top" style={{width: '18rem'}}>
+            <img
+              style={{
+                width: '17rem',
+                marginRight: '100px'
+            }}  
+              alt="Could not be found"
+              src={image.url}
+              data-toggle="modal"
+              data-target="#ModalPreViewImg"
+              className="img-responsive"
+            ></img>
           </div>
+          <div class="card-body">
+            <h2 class="card-tittle" style={{color: 'black'}}>{image.description}</h2>
+          </div>
+        </div>
         ))}
       </div>
     </div>
