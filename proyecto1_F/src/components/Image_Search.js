@@ -16,7 +16,7 @@ export default function ImageSearch() {
       description: databaseImage.description,
       date: new Date(databaseImage.created_at).toLocaleString(),
       /* lo que no funciona es la linea de abajo hasta que api/saveFile funcione, aunque la web sigue funcionando solo que no pinta la imagen*/
-      url: 'C:\\Users\\jmart\\Dev\\Study\\ACD_P1\\proyecto1_B\\public\\images' + databaseImage.image,
+      url: 'http://localhost:8001/images/' + databaseImage.image,
       index: indexImg
     } 
     return image
@@ -36,10 +36,13 @@ export default function ImageSearch() {
     }
     for (const databaseImage of databaseImages) {
       const auxImg = transImages(databaseImage, indexImg)
-      newImgArray.push(auxImg)
-      indexImg++
+      const url = images.map(img => img.url)
+      const setUrl = new Set(url)
+      if (!setUrl.has(auxImg.url)) {
+        newImgArray.push(auxImg)
+        indexImg++
+      } 
     }
-    console.log(newImgArray)
     setImages([...images, ...newImgArray])
     console.log(images)
   } 
