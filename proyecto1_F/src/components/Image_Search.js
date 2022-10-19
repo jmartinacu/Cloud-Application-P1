@@ -65,8 +65,8 @@ export default function ImageSearch() {
           {images.sort((a, b) => {
             return new Date(a.date).getTime() - new Date(b.date).getTime()
           }).map((image) => (
-            <div style={{width: '18rem'}} class="card" key={image.index}>
-              <div class="card-img-top" style={{width: '18rem'}}>
+            <div style={{width: '18rem'}} className="card" key={image.index}>
+              <div className="card-img-top" style={{width: '18rem'}}>
                 <img
                   style={{
                     width: '17rem',
@@ -79,9 +79,9 @@ export default function ImageSearch() {
                   className="img-responsive"
                 ></img>
               </div>
-              <div class="card-body">
-                <h2 class="card-tittle" style={{color: 'black'}}>{image.description}</h2>
-                <div class="card-text" style={{color: 'black'}}>{`Date: ${image.date}`}</div>
+              <div className="card-body">
+                <h2 className="card-tittle" style={{color: 'black'}}>{image.description}</h2>
+                <div className="card-text" style={{color: 'black'}}>{`Date: ${image.date}`}</div>
               </div>
             </div>
           ))}

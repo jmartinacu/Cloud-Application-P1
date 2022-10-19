@@ -18,7 +18,8 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+/*  THE REASON THE APP IS NOT WORKING MIGHT BE THE UNDER LINE */
+    res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Content-Type, Accept")
     res.header('Access-Control-Allow-Methods', 'GET, POST')
     next();
